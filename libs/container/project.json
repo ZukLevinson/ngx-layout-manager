@@ -1,23 +1,23 @@
 {
-  "name": "ui",
+  "name": "container",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/ui/src",
+  "sourceRoot": "libs/container/src",
   "prefix": "oblivion",
   "projectType": "library",
   "tags": [],
   "targets": {
-    "blibs/uild": {
+    "build": {
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "libs/ui/ng-package.json"
+        "project": "libs/container/ng-package.json"
       },
       "configurations": {
         "production": {
-          "tsConfig": "libs/ui/tsconfig.lib.prod.json"
+          "tsConfig": "libs/container/tsconfig.lib.prod.json"
         },
         "development": {
-          "tsConfig": "libs/ui/tsconfig.lib.json"
+          "tsConfig": "libs/container/tsconfig.lib.json"
         }
       },
       "defaultConfiguration": "production"

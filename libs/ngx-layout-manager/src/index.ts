@@ -1,1 +1,1 @@
-export * from './lib/ngx-layout-manager.module'
+export * from './lib/layout-manager.module'

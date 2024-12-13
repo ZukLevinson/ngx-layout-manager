@@ -1,0 +1,20 @@
+<div class='flex relative' [class.is-molecule]='isSubContainer' cdkDropList>
+  <ng-container *ngFor='let molecule of molecules; let last=last; let index = index; trackBy: moleculeById'>
+    <ng-container *ngIf='molecule | isSingleMolecule; else containerTemplate'>
+      <oblivion-molecule [molecule]='molecule' [style.flex]='molecule.measurements.xPercentage'
+                         [isDragging]='isDragging'
+                         [maxHeightFromParent]='maxHeightInPx'></oblivion-molecule>
+      <div class='line cursor-grab' *ngIf='!last' cdkDrag cdkDragLockAxis='x' cdkDragBoundary='oblivion-container'
+           [cdkDragConstrainPosition]='constrainDrag(index)'
+           (cdkDragStarted)='isDragging=true'
+           (cdkDragEnded)='isDragging=false'
+           (cdkDragMoved)='onLineMove($event, index)'></div>
+    </ng-container>
+
+    <ng-template #containerTemplate>
+      <oblivion-container [molecules]='molecule.molecules ?? []' [isSubContainer]='true' [isDragging]='isDragging'
+                          [style.flex]='molecule.measurements.xPercentage'></oblivion-container>
+      <div class='line' *ngIf='!last'></div>
+    </ng-template>
+  </ng-container>
+</div>
