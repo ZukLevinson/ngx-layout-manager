@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@ngx-layout-manager/models": ["libs/models/src/index.ts"],
+      "@oblivion/ngx-layout-manager": ["libs/ngx-layout-manager/src/index.ts"],
+      "@oblivion/ui": ["libs/ui/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
