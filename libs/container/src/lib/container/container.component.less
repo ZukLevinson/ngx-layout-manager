@@ -2,15 +2,15 @@
 }
 
 .line {
-  min-width: 3px;
+  @normalSize: 1px;
 
-  width: 3px;
+  width: @normalSize;
   min-height: 100%;
   background: darkgray;
   margin: 0 3px;
 
   &:hover {
-    width: 5px;
+    width: 3px;
     margin: 0 2px;
   }
 }

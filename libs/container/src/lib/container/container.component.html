@@ -1,9 +1,12 @@
-<div class='flex relative' [class.is-molecule]='isSubContainer' cdkDropList>
+<div class='flex relative overflow-hidden' [class.is-molecule]='isSubContainer' cdkDropList>
   <ng-container *ngFor='let molecule of molecules; let last=last; let index = index; trackBy: moleculeById'>
     <ng-container *ngIf='molecule | isSingleMolecule; else containerTemplate'>
-      <oblivion-molecule [molecule]='molecule' [style.flex]='molecule.measurements.xPercentage'
+      <oblivion-molecule [molecule]='molecule'
                          [isDragging]='isDragging'
-                         [maxHeightFromParent]='maxHeightInPx'></oblivion-molecule>
+                         [style.flex]='molecule.measurements.xPercentage'
+                         [style.min-width.px]='molecule.minWidthInPx'
+                         [style.min-height.px]='molecule.minHeightInPx'
+                         [style.max-height.px]='maxHeightInPx'></oblivion-molecule>
       <div class='line cursor-grab' *ngIf='!last' cdkDrag cdkDragLockAxis='x' cdkDragBoundary='oblivion-container'
            [cdkDragConstrainPosition]='constrainDrag(index)'
            (cdkDragStarted)='isDragging=true'
@@ -12,9 +15,19 @@
     </ng-container>
 
     <ng-template #containerTemplate>
-      <oblivion-container [molecules]='molecule.molecules ?? []' [isSubContainer]='true' [isDragging]='isDragging'
-                          [style.flex]='molecule.measurements.xPercentage'></oblivion-container>
-      <div class='line' *ngIf='!last'></div>
+      <oblivion-container [molecules]='molecule.molecules ?? []'
+                          [isSubContainer]='true'
+                          [isDragging]='isDragging'
+                          [style.flex]='molecule.measurements.xPercentage'
+                          [style.min-width.px]='molecule.minWidthInPx'
+                          [style.min-height.px]='molecule.minHeightInPx'
+                          [style.max-height.px]='maxHeightInPx'>>
+      </oblivion-container>
+      <div class='line cursor-grab' *ngIf='!last' cdkDrag cdkDragLockAxis='x' cdkDragBoundary='oblivion-container'
+           [cdkDragConstrainPosition]='constrainDrag(index)'
+           (cdkDragStarted)='isDragging=true'
+           (cdkDragEnded)='isDragging=false'
+           (cdkDragMoved)='onLineMove($event, index)'></div>
     </ng-template>
   </ng-container>
 </div>

@@ -11,6 +11,7 @@ import { CDK_DRAG_CONFIG, CdkDragMove, DragDropModule, DragRef, DragRefConfig, P
 import { Molecule } from '@ngx-layout-manager/models';
 import { IsSingleMoleculePipe } from '../is-single-molecule/is-single-molecule.pipe';
 import { CommonModule } from '@angular/common';
+import { sum } from 'lodash';
 
 const DragConfig: DragRefConfig = {
   dragStartThreshold: 0,
@@ -42,13 +43,13 @@ export class ContainerComponent implements AfterViewChecked, AfterContentInit {
       const leftInPx = this.el.nativeElement.offsetLeft;
       const widthInPx = this.el.nativeElement.offsetWidth;
 
-      const initialDelta = index === 0 ? 0 : 3;
-
-      const previewsNodeMinWidthInPx = this.molecules.reduce((prev, curr, moleculeIndex) => prev + (moleculeIndex <= index ? curr.minWidthInPx : 0), initialDelta + (index) * 6);
-      const futureNodeMinWidthInPx = this.molecules.reduce((prev, curr, moleculeIndex) => prev + (moleculeIndex > index ? curr.minWidthInPx : 0), initialDelta + (this.molecules.length - index) * 6);
+      const previewsNodeMinWidthInPx = this.molecules.reduce((prev, curr, moleculeIndex) => prev + (moleculeIndex <= index ? curr.minWidthInPx : 0), (index) * 7);
+      const futureNodeMinWidthInPx = this.molecules.reduce((prev, curr, moleculeIndex) => prev + (moleculeIndex > index ? curr.minWidthInPx : 0), (this.molecules.length - (index + 1)) * 7);
 
       const maxLeft = leftInPx + previewsNodeMinWidthInPx;
       const maxRight = leftInPx + widthInPx - futureNodeMinWidthInPx;
+
+      console.log(leftInPx, widthInPx, previewsNodeMinWidthInPx, futureNodeMinWidthInPx, maxLeft, maxRight, (this.molecules.length - index) * 7);
 
       if (userPointerPosition.x <= maxLeft) {
         return {
@@ -84,8 +85,6 @@ export class ContainerComponent implements AfterViewChecked, AfterContentInit {
 
     const percentage = (movementInPx * 100) / fullWidthInPx;
 
-    console.log(fullWidthInPx, movementInPx, percentage);
-
     this.molecules = this.molecules.map((molecule, moleculeIndex) => {
       if (moleculeIndex === index) {
         return {
@@ -94,15 +93,20 @@ export class ContainerComponent implements AfterViewChecked, AfterContentInit {
             xPercentage: percentage
           }
         };
-      } else if (moleculeIndex === index + 1) {
+      } else {
+        const b = (100 - percentage) * (molecule.measurements.xPercentage / this.molecules.filter((_,currIndex)=>currIndex !== index).reduce((prev, curr) => prev + curr.measurements.xPercentage, 0));
+        console.log(b);
+
         return {
-          ...molecule, measurements: {
+          ...molecule,
+          measurements: {
             ...molecule.measurements,
-            xPercentage: 100 - percentage
+            xPercentage: b
           }
         };
-      } else return molecule;
+      }
     });
+    console.log(this.molecules.map(({ measurements }) => measurements.xPercentage), sum(this.molecules.map(({ measurements }) => measurements.xPercentage)));
   }
 
   private checkAndUpdateMaxHeight() {

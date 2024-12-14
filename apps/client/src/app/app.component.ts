@@ -19,7 +19,7 @@ export class AppComponent {
     this.molecules = [{
       id: '1',
       isFixed: false,
-      minWidthInPx: 247,
+      minWidthInPx: 100,
       minHeightInPx: 300,
       measurements: {
         xPercentage: 30
@@ -28,7 +28,7 @@ export class AppComponent {
       {
         id: '2',
         isFixed: false,
-        minWidthInPx: 496,
+        minWidthInPx: 200 + 7,
         minHeightInPx: 300,
         measurements: {
           xPercentage: 40
@@ -37,7 +37,7 @@ export class AppComponent {
           {
             id: '2A',
             isFixed: false,
-            minWidthInPx: 247,
+            minWidthInPx: 100,
             minHeightInPx: 300,
             measurements: {
               xPercentage: 50
@@ -46,7 +46,7 @@ export class AppComponent {
           {
             id: '2B',
             isFixed: false,
-            minWidthInPx: 247,
+            minWidthInPx: 100,
             minHeightInPx: 300,
             measurements: {
               xPercentage: 50
@@ -57,11 +57,39 @@ export class AppComponent {
       {
         id: '3',
         isFixed: false,
-        minWidthInPx: 247,
+        minWidthInPx: 300 + 7 * 2,
         minHeightInPx: 300,
         measurements: {
           xPercentage: 30
-        }
+        },
+        molecules: [
+          {
+            id: '3A',
+            isFixed: false,
+            minWidthInPx: 100,
+            minHeightInPx: 300,
+            measurements: {
+              xPercentage: 100 / 3
+            }
+          },
+          {
+            id: '3B',
+            isFixed: false,
+            minWidthInPx: 100,
+            minHeightInPx: 300,
+            measurements: {
+              xPercentage: 100 / 3
+            }
+          },
+          {
+            id: '3C',
+            isFixed: false,
+            minWidthInPx: 100,
+            minHeightInPx: 300,
+            measurements: {
+              xPercentage: 100 / 3
+            }
+          }]
       }
     ];
   }

@@ -1,15 +1,11 @@
-<div *ngIf='isDragging; else moleculeTemplate'
-     [style.min-width.px]='molecule.minWidthInPx'
-     [style.min-height.px]='molecule.minHeightInPx' class='bg-stone-800 flex items-center content-center'>
-  <span class='text-gray-400 bold size-3'>dragging</span>
+<div *ngIf='isDragging; else moleculeTemplate' class='bg-stone-800 flex items-center justify-center w-full h-full'>
+  <span class='text-gray-400 bold size-3 uppercase'>dragging</span>
 </div>
 
 <ng-template #moleculeTemplate>
-  <div class='border select-none shadow-md flex flex-col overflow-auto resize' cdkDrag
+  <div class='border select-none shadow-md flex flex-col overflow-auto resize h-full' cdkDrag
        (resize)='resizeDone.emit($event)'
-       (cdkDragEnded)='dragDone.emit($event)'
-       [style.min-width.px]='molecule.minWidthInPx'
-       [style.min-height.px]='molecule.minHeightInPx' [style.max-height.px]='maxHeightFromParent'>
+       (cdkDragEnded)='dragDone.emit($event)'>
     <div class='h-[25px] bg-stone-800 px-4 flex items-center text-sm text-white' cdkDragHandle>
       <div class='metadata'>
         <span>im molecule {{molecule.id}}</span>
